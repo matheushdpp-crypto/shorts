@@ -6,3 +6,14 @@ toolbarMode = "minimal"
 
 [logger]
 hideWelcomeMessage = true
+
+# MDG Shorts Studio — tema "console de estúdio de criação" (dark + accent verde).
+# As cores base ficam aqui para o Streamlit aplicar em todos os componentes nativos;
+# a camada de tokens e o acordeão de fases são refinados em webui/styles.css.
+[theme]
+base = "dark"
+primaryColor = "#2CE58B"
+backgroundColor = "#0E1117"
+secondaryBackgroundColor = "#181D26"
+textColor = "#E6E9EF"
+font = "sans serif"

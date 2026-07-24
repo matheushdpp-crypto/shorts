@@ -273,6 +273,25 @@
     "Please Enter the Coverr API Key": "Por favor, insira a **Chave de API do Coverr**",
     "Video Encoder": "Codificador de vídeo",
     "Default Video Encoder": "Padrão (recomendado)",
-    "Video Encoder Help": "Opção avançada. Padrão segue a política estável do aplicativo, atualmente libx264. Se um codificador de hardware não estiver disponível, o aplicativo retorna automaticamente para libx264."
+    "Video Encoder Help": "Opção avançada. Padrão segue a política estável do aplicativo, atualmente libx264. Se um codificador de hardware não estiver disponível, o aplicativo retorna automaticamente para libx264.",
+    "Phase Script": "Roteiro",
+    "Phase Video": "Vídeo",
+    "Phase Audio": "Narração",
+    "Phase Subtitle": "Legendas",
+    "Interface Language": "Idioma da interface",
+    "Publishing Tab": "Publicação",
+    "Upload-Post Description": "Publique os shorts automaticamente no TikTok, Instagram e YouTube via Upload-Post. Conecte suas contas no site deles e cole a chave abaixo. É opcional.",
+    "Enable Auto Publishing": "Ativar publicação automática",
+    "Upload-Post API Key": "Chave de API do Upload-Post",
+    "Upload-Post Get Key Hint": "Crie uma conta em upload-post.com, conecte suas redes e gere a chave de API.",
+    "Upload-Post Username": "Usuário do Upload-Post",
+    "Publishing Platforms": "Plataformas",
+    "YouTube Privacy": "Privacidade no YouTube",
+    "Privacy Public": "Público",
+    "Privacy Unlisted": "Não listado",
+    "Privacy Private": "Privado",
+    "Auto Publish After Generation": "Publicar automaticamente ao concluir o vídeo",
+    "Phase Continue": "Concluir e continuar",
+    "Phase Finish": "Concluir"
   }
 }

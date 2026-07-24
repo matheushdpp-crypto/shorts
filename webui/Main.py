@@ -17,6 +17,7 @@ from uuid import UUID, uuid4
 import requests
 import streamlit as st
 from loguru import logger
+from streamlit.components.v1 import html as components_html
 from streamlit_tour import Tour
 
 # WebUI 作为独立入口运行时，需要让项目根目录优先于第三方依赖，
@@ -52,16 +53,16 @@ from app.utils.logging_utils import configure_terminal_logger
 from app.utils import utils
 
 st.set_page_config(
-    page_title="MoneyPrinterTurbo",
-    page_icon="🤖",
+    page_title="MDG Shorts Studio",
+    page_icon="🎬",
     layout="wide",
     initial_sidebar_state="auto",
     menu_items={
         "Report a bug": "https://github.com/harry0703/MoneyPrinterTurbo/issues",
-        "About": "# MoneyPrinterTurbo\nSimply provide a topic or keyword for a video, and it will "
-        "automatically generate the video copy, video materials, video subtitles, "
-        "and video background music before synthesizing a high-definition short "
-        "video.\n\nhttps://github.com/harry0703/MoneyPrinterTurbo",
+        "About": "# MDG Shorts Studio\nInforme um tema ou palavra-chave e o estúdio gera "
+        "o roteiro, os materiais, a narração, as legendas e a trilha antes de montar "
+        "um short em alta definição.\n\nBaseado em MoneyPrinterTurbo "
+        "(https://github.com/harry0703/MoneyPrinterTurbo).",
     },
 )
 
@@ -223,13 +224,9 @@ def _initialize_session_state():
         if recovered is not None:
             st.session_state["cross_post_recovery_checked"] = True
 
-    saved_ui_language = config.ui.get("language", "")
-    browser_locale = st.context.locale
-    initial_ui_language = utils.resolve_ui_language(
-        saved_language=saved_ui_language,
-        browser_locale=browser_locale,
-        supported_languages=locales.keys(),
-    )
+    # A interface é fixada em Português (BR); o seletor de idioma da UI foi
+    # removido. Fallback defensivo caso o locale pt não esteja disponível.
+    initial_ui_language = "pt" if "pt" in locales else next(iter(locales), "en")
 
     defaults = {
         "video_subject": "",
@@ -1058,13 +1055,7 @@ def _render_brand(available_update: str | None = None):
     st.markdown(
         f"""
         <h1 class="mpt-brand">
-            <span class="mpt-brand__name">MoneyPrinterTurbo</span>
-            <a class="mpt-brand__version"
-               href="https://github.com/harry0703/MoneyPrinterTurbo"
-               target="_blank"
-               rel="noopener noreferrer"
-               aria-label="Open MoneyPrinterTurbo on GitHub"
-               title="Open project on GitHub">v{html.escape(str(config.project_version))}</a>
+            <span class="mpt-brand__name">MDG Shorts Studio</span>
             {update_link}
         </h1>
         """,
@@ -1122,37 +1113,6 @@ def _render_top_bar():
                 width="content",
             ):
                 st.session_state["settings_dialog_open"] = True
-
-            language_codes = list(locales.keys())
-            selected_index = 0
-            for i, code in enumerate(language_codes):
-                if code == st.session_state.get("ui_language", ""):
-                    selected_index = i
-
-            selected_language_code = st.selectbox(
-                "Language / 语言",
-                options=language_codes,
-                index=selected_index,
-                format_func=lambda code: locales[code].get("Language", code),
-                key="top_language_code_selector",
-                label_visibility="collapsed",
-                width=180,
-            )
-            if selected_language_code:
-                previous_language = st.session_state.get("ui_language", "")
-                if selected_language_code != previous_language:
-                    logger.info(
-                        "UI language changed by user: "
-                        f"previous_language={previous_language or '<empty>'}, "
-                        f"selected_language={selected_language_code}"
-                    )
-                    st.session_state["ui_language"] = selected_language_code
-                    # 浏览器自动识别只影响当前会话；只有用户主动切换下拉框时才
-                    # 写入 config.toml，后续新会话将优先使用该明确选择。
-                    config.ui["language"] = selected_language_code
-                    config.save_config()
-                    # 切换语言后强制刷新，避免 selectbox 继续展示旧语言文案。
-                    st.rerun()
 
 
 support_locales = [
@@ -1805,7 +1765,7 @@ def _render_cache_management_settings(panel):
 # 关闭时通过回调触发整页同步，确保生成流程读取最新 Provider 和界面设置。
 @st.dialog(
     tr("Settings"),
-    width="medium",
+    width="large",
     on_dismiss=_dismiss_settings_dialog,
 )
 def _render_settings_dialog():
@@ -1816,18 +1776,20 @@ def _render_settings_dialog():
         (
             middle_config_panel,
             right_config_panel,
+            publish_config_panel,
             cache_config_panel,
             left_config_panel,
         ) = st.tabs(
             [
                 tr("LLM Settings Tab"),
                 tr("Material API Tab"),
+                tr("Publishing Tab"),
                 tr("Cache Management Tab"),
                 tr("Interface Settings Tab"),
             ]
         )
 
-        # 左侧面板 - 日志设置
+        # 左侧面板 - 界面设置（日志）
         with left_config_panel:
             hide_log = st.checkbox(
                 tr("Hide Log"),
@@ -2046,6 +2008,74 @@ def _render_settings_dialog():
             )
             _save_material_api_keys("coverr_api_keys", coverr_api_key)
 
+        # 发布面板 - Upload-Post 跨平台自动发布
+        # 该能力此前只存在于 config.toml 与后端，现在在界面中开放，方便协作者
+        # 无需手动编辑配置文件即可连接社交账号并自动发布成片。
+        with publish_config_panel:
+            st.caption(tr("Upload-Post Description"))
+
+            upload_post_enabled = st.toggle(
+                tr("Enable Auto Publishing"),
+                value=config.app.get("upload_post_enabled", False),
+                key="upload_post_enabled_toggle",
+            )
+            config.app["upload_post_enabled"] = upload_post_enabled
+
+            upload_post_api_key = st.text_input(
+                tr("Upload-Post API Key"),
+                value=config.app.get("upload_post_api_key", ""),
+                type="password",
+                key="upload_post_api_key_input",
+                help=tr("Upload-Post Get Key Hint"),
+            )
+            config.app["upload_post_api_key"] = upload_post_api_key
+
+            upload_post_username = st.text_input(
+                tr("Upload-Post Username"),
+                value=config.app.get("upload_post_username", ""),
+                key="upload_post_username_input",
+            )
+            config.app["upload_post_username"] = upload_post_username
+
+            available_platforms = ["tiktok", "instagram", "youtube"]
+            saved_platforms = [
+                platform
+                for platform in config.app.get(
+                    "upload_post_platforms", ["tiktok", "instagram"]
+                )
+                if platform in available_platforms
+            ]
+            selected_platforms = st.multiselect(
+                tr("Publishing Platforms"),
+                options=available_platforms,
+                default=saved_platforms,
+                format_func=lambda platform: platform.capitalize(),
+                key="upload_post_platforms_multiselect",
+            )
+            config.app["upload_post_platforms"] = selected_platforms
+
+            youtube_privacy_options = ["public", "unlisted", "private"]
+            saved_privacy = config.app.get(
+                "upload_post_youtube_privacy_status", "public"
+            )
+            if saved_privacy not in youtube_privacy_options:
+                saved_privacy = "public"
+            youtube_privacy = st.selectbox(
+                tr("YouTube Privacy"),
+                options=youtube_privacy_options,
+                index=youtube_privacy_options.index(saved_privacy),
+                format_func=lambda value: tr(f"Privacy {value.capitalize()}"),
+                key="upload_post_youtube_privacy_select",
+            )
+            config.app["upload_post_youtube_privacy_status"] = youtube_privacy
+
+            upload_post_auto = st.toggle(
+                tr("Auto Publish After Generation"),
+                value=config.app.get("upload_post_auto_upload", False),
+                key="upload_post_auto_upload_toggle",
+            )
+            config.app["upload_post_auto_upload"] = upload_post_auto
+
     config.save_config()
 
 
@@ -2065,11 +2095,21 @@ def _render_script_settings(panel, params):
                 key="video_subject",
             ).strip()
 
+            # Idiomas de conteúdo curados com foco em público de CPM alto no
+            # YouTube. O valor é o código BCP-47 enviado ao LLM como idioma do
+            # roteiro (o backend apenas o repassa no prompt); o rótulo traz
+            # bandeira + nome para facilitar a escolha.
             video_languages = [
-                (tr("Auto Detect"), ""),
+                (f"🌐  {tr('Auto Detect')}", ""),
+                ("🇺🇸  English (US)", "en-US"),
+                ("🇦🇺  English (Australia)", "en-AU"),
+                ("🇪🇸  Español", "es-ES"),
+                ("🇧🇷  Português (Brasil)", "pt-BR"),
+                ("🇵🇹  Português (Portugal)", "pt-PT"),
+                ("🇫🇷  Français", "fr-FR"),
+                ("🇳🇴  Norsk", "nb-NO"),
+                ("🇨🇭  Deutsch (Schweiz)", "de-CH"),
             ]
-            for code in support_locales:
-                video_languages.append((code, code))
 
             selected_language_code = stable_selectbox(
                 tr("Script Language"),
@@ -3699,7 +3739,6 @@ def _render_generation_controls(
         key="generate_video_button",
         on_click=_prepare_generation_task,
     )
-    render_onboarding_tour()
     if start_button:
         config.save_config()
         task_id = st.session_state.get("pending_generation_task_id") or str(uuid4())
@@ -3921,25 +3960,126 @@ def _render_application():
     if restore_applied or restore_succeeded:
         st.success(tr("Task Configuration Loaded"))
 
-    with st.container(key="main_settings_grid"):
-        panel = st.columns(4)
-    left_panel = panel[0]
-    middle_panel = panel[1]
-    audio_panel = panel[2]
-    right_panel = panel[3]
-
     params = VideoParams(video_subject="")
     params.match_materials_to_script = bool(
         st.session_state.get("match_materials_to_script", False)
     )
-    _render_script_settings(left_panel, params)
 
-    uploaded_files = _render_video_settings(middle_panel, params)
-    uploaded_audio_file, uploaded_bgm_file, voice_mode = _render_audio_settings(
-        audio_panel, params
+    # As quatro etapas viram um acordeão vertical (stepper inline): ficam
+    # empilhadas em linha e só uma abre por vez, começando em Roteiro. O conteúdo
+    # de todas é renderizado a cada execução — as fechadas apenas ficam ocultas
+    # por CSS — para que VideoParams continue totalmente preenchido e a geração
+    # funcione igual ao layout anterior de quatro colunas.
+    phase_labels = [
+        tr("Phase Script"),
+        tr("Phase Video"),
+        tr("Phase Audio"),
+        tr("Phase Subtitle"),
+    ]
+    open_phase = st.session_state.setdefault("open_phase", 0)
+
+    # CSS dinâmico: oculta o corpo das fases fechadas e realça no accent o
+    # cabeçalho da fase aberta e os já concluídos.
+    dynamic_css = ""
+    hidden_selectors = ",".join(
+        f".st-key-phase_body_{i}" for i in range(len(phase_labels)) if i != open_phase
     )
+    if hidden_selectors:
+        dynamic_css += f"{hidden_selectors}{{display:none !important;}}"
+    if 0 <= open_phase < len(phase_labels):
+        dynamic_css += (
+            f".st-key-phase_head_{open_phase} button{{"
+            "border-color:var(--mdg-accent) !important;"
+            "color:var(--mdg-accent) !important;}"
+        )
+    for done_index in range(max(open_phase, 0)):
+        dynamic_css += (
+            f".st-key-phase_head_{done_index} button{{color:var(--mdg-accent) !important;}}"
+        )
+    st.markdown(f"<style>{dynamic_css}</style>", unsafe_allow_html=True)
 
-    _render_subtitle_settings(right_panel, params)
+    def _open_phase(index):
+        # Abrir uma fase também pede à página para rolar até o topo do cabeçalho
+        # dessa fase; fechar tudo (index < 0) não dispara rolagem.
+        st.session_state["open_phase"] = index
+        if index >= 0:
+            st.session_state["scroll_to_phase"] = index
+        st.rerun()
+
+    def _phase_header(index, name):
+        is_open = index == open_phase
+        is_done = 0 <= open_phase and index < open_phase
+        marker = "✓" if is_done else str(index + 1)
+        if st.button(
+            f"{marker}   {name}",
+            key=f"phase_head_{index}",
+            use_container_width=True,
+        ):
+            # Alterna: clicar na fase aberta a fecha; clicar em outra a abre e
+            # fecha a anterior, mantendo sempre no máximo uma expandida.
+            _open_phase(-1 if is_open else index)
+
+    def _phase_footer(index):
+        is_last = index == len(phase_labels) - 1
+        if st.button(
+            tr("Phase Finish") if is_last else tr("Phase Continue"),
+            key=f"phase_done_{index}",
+            type="primary",
+            use_container_width=True,
+        ):
+            _open_phase(-1 if is_last else index + 1)
+
+    uploaded_files = []
+    uploaded_audio_file = None
+    uploaded_bgm_file = None
+    voice_mode = None
+    with st.container(key="phase_flow"):
+        for index, name in enumerate(phase_labels):
+            _phase_header(index, name)
+            body = st.container(key=f"phase_body_{index}")
+            if index == 0:
+                _render_script_settings(body, params)
+            elif index == 1:
+                uploaded_files = _render_video_settings(body, params)
+            elif index == 2:
+                (
+                    uploaded_audio_file,
+                    uploaded_bgm_file,
+                    voice_mode,
+                ) = _render_audio_settings(body, params)
+            else:
+                _render_subtitle_settings(body, params)
+            with body:
+                _phase_footer(index)
+
+    # Após abrir uma fase, rola a página para alinhar o cabeçalho dela ao topo,
+    # deixando o conteúdo do card visível do título para baixo. O script roda em
+    # um iframe (components.html) e atua no documento pai; só dispara logo depois
+    # de uma ação de abrir, e a flag é consumida para não interferir na rolagem
+    # durante a digitação ou outras interações.
+    scroll_target = st.session_state.pop("scroll_to_phase", None)
+    if scroll_target is not None:
+        # scrollIntoView resolve o container de rolagem correto sozinho (no
+        # Streamlit a rolagem acontece em stMain, não na window). O respiro acima
+        # do cabeçalho vem do scroll-margin-top definido em styles.css.
+        components_html(
+            f"""
+            <script>
+            const doc = window.parent.document;
+            const target = '.st-key-phase_head_{scroll_target}';
+            // O Streamlit restaura a posição de rolagem após o rerun, então um
+            // único scroll é sobrescrito. Repetir por ~0,8s garante que o
+            // cabeçalho recém-aberto vença a restauração e fique no topo.
+            let tries = 0;
+            const timer = setInterval(() => {{
+                const header = doc.querySelector(target);
+                if (header) header.scrollIntoView({{ behavior: 'auto', block: 'start' }});
+                if (++tries >= 7) clearInterval(timer);
+            }}, 120);
+            </script>
+            """,
+            height=0,
+        )
 
     generation_submitted = _render_generation_controls(
         params,

@@ -437,3 +437,210 @@ div[class*="st-key-task_row_"] button[kind="secondary"] p {
         min-width: 1.75rem !important;
     }
 }
+
+
+/* =============================================================================
+   MDG Shorts Studio — camada de design "console de estúdio de criação".
+   Um único sistema de tokens (cores, tipografia, raios) aplicado por cima do
+   tema dark nativo do Streamlit. O elemento-assinatura é o stepper horizontal
+   de 4 fases (Roteiro · Vídeo · Narração · Legendas). Accent coral #FF5C49.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+    --mdg-bg: #0E1117;
+    --mdg-bg-elev: #12161F;
+    --mdg-surface: #181D26;
+    --mdg-surface-2: #1F2530;
+    --mdg-border: #2A313C;
+    --mdg-border-soft: #232935;
+    --mdg-text: #E6E9EF;
+    --mdg-muted: #8792A3;
+    --mdg-accent: #2CE58B;
+    --mdg-accent-strong: #3DEE99;
+    --mdg-accent-dim: rgba(44, 229, 139, 0.14);
+    --mdg-accent-ring: rgba(44, 229, 139, 0.42);
+    --mdg-on-accent: #06110B;
+    --mdg-radius: 14px;
+    --mdg-radius-sm: 10px;
+    --mdg-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+    --mdg-body: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
+/* Fundo com um leve brilho superior, evocando a luz de uma mesa de edição,
+   sem competir com o conteúdo. */
+.stApp {
+    background:
+        radial-gradient(1200px 520px at 50% -8%, #171C27 0%, var(--mdg-bg) 62%);
+    color: var(--mdg-text);
+    font-family: var(--mdg-body);
+}
+
+/* -------------------------------------------------------------------------
+   Marca: nome do estúdio em display, versão discreta na mesma linha de base.
+   ------------------------------------------------------------------------- */
+.mpt-brand__name {
+    font-family: var(--mdg-display);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    background: linear-gradient(92deg, var(--mdg-text) 0%, #C9CFDA 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+/* Sinal coral colado ao nome, marcando a identidade como um LED de "no ar". */
+.mpt-brand > span:first-child::before {
+    content: "";
+    flex: 0 0 auto;
+    width: 8px;
+    height: 8px;
+    margin-right: 0.15rem;
+    border-radius: 50%;
+    background: var(--mdg-accent);
+    box-shadow: 0 0 0 4px var(--mdg-accent-dim);
+}
+
+/* -------------------------------------------------------------------------
+   Acordeão de fases (stepper inline): as quatro etapas ficam empilhadas, cada
+   uma com um cabeçalho clicável e um corpo que abre uma por vez. O cabeçalho é
+   um botão full-width; a fase aberta e as concluídas recebem o accent via CSS
+   dinâmico gerado em Main.py (border/color).
+   ------------------------------------------------------------------------- */
+.st-key-phase_flow {
+    gap: 0.55rem !important;
+}
+
+/* scroll-margin-top garante o respiro acima do cabeçalho quando o auto-scroll
+   (scrollIntoView, em Main.py) alinha a fase recém-aberta ao topo. */
+div[class*="st-key-phase_head_"] {
+    scroll-margin-top: 16px;
+}
+
+/* Cabeçalho da fase: linha larga, texto à esquerda, número/✓ em destaque. */
+div[class*="st-key-phase_head_"] button {
+    justify-content: flex-start !important;
+    min-height: 3.1rem !important;
+    padding: 0.6rem 1.1rem !important;
+    border: 1px solid var(--mdg-border) !important;
+    border-radius: var(--mdg-radius-sm) !important;
+    background: var(--mdg-surface) !important;
+    color: var(--mdg-text) !important;
+    font-family: var(--mdg-display) !important;
+    font-weight: 600 !important;
+    text-align: left !important;
+}
+
+div[class*="st-key-phase_head_"] button p {
+    font-family: var(--mdg-display) !important;
+    font-size: 1.02rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.01em;
+    white-space: pre;
+}
+
+div[class*="st-key-phase_head_"] button:hover {
+    border-color: var(--mdg-accent) !important;
+    background: var(--mdg-surface-2) !important;
+}
+
+/* Corpo da fase: cartão único, borda suave, respiro interno. As fases fechadas
+   recebem display:none via CSS dinâmico, mas continuam renderizadas no script. */
+div[class*="st-key-phase_body_"] {
+    margin-top: -0.1rem;
+}
+
+div[class*="st-key-phase_body_"] div[data-testid="stVerticalBlockBorderWrapper"] {
+    background: var(--mdg-surface);
+    border: 1px solid var(--mdg-border-soft) !important;
+    border-radius: var(--mdg-radius) !important;
+}
+
+/* Título dentro do cartão da fase (st.write) em display, discreto. */
+div[class*="st-key-phase_body_"]
+    div[data-testid="stVerticalBlockBorderWrapper"]
+    div[data-testid="stElementContainer"]:first-child p {
+    font-family: var(--mdg-display);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
+/* Botão "Concluir/Continuar" ao final de cada fase: accent verde, texto escuro. */
+div[class*="st-key-phase_done_"] button {
+    min-height: 2.9rem !important;
+    margin-top: 0.75rem;
+    border: 0 !important;
+    border-radius: var(--mdg-radius-sm) !important;
+    background: linear-gradient(180deg, var(--mdg-accent-strong), var(--mdg-accent)) !important;
+    color: var(--mdg-on-accent) !important;
+    font-family: var(--mdg-display) !important;
+    font-weight: 700 !important;
+}
+
+div[class*="st-key-phase_done_"] button:hover {
+    filter: brightness(1.05);
+}
+
+div[class*="st-key-phase_done_"] button p {
+    color: var(--mdg-on-accent) !important;
+    font-weight: 700 !important;
+}
+
+/* -------------------------------------------------------------------------
+   Ação principal "Gerar vídeo": CTA coral alto e presente, fecha o stepper.
+   ------------------------------------------------------------------------- */
+.st-key-generate_video_button button {
+    min-height: 3.25rem !important;
+    margin-top: 0.5rem;
+    border: 0 !important;
+    border-radius: var(--mdg-radius-sm) !important;
+    background: linear-gradient(180deg, var(--mdg-accent-strong), var(--mdg-accent)) !important;
+    color: var(--mdg-on-accent) !important;
+    box-shadow: 0 10px 26px -12px var(--mdg-accent-ring);
+    font-family: var(--mdg-display) !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.01em;
+}
+
+.st-key-generate_video_button button:hover {
+    filter: brightness(1.06);
+    box-shadow: 0 14px 32px -12px var(--mdg-accent-ring);
+}
+
+.st-key-generate_video_button button p {
+    color: var(--mdg-on-accent) !important;
+    font-size: 1.05rem !important;
+    font-weight: 700 !important;
+}
+
+/* -------------------------------------------------------------------------
+   Refinos globais: botão de configurações, foco coral em campos, abas do
+   modal de configurações compartilham o accent sem virarem stepper.
+   ------------------------------------------------------------------------- */
+.st-key-open_settings_dialog_button button {
+    border: 1px solid var(--mdg-border) !important;
+    border-radius: var(--mdg-radius-sm) !important;
+    background: var(--mdg-surface) !important;
+}
+
+.st-key-open_settings_dialog_button button:hover {
+    border-color: var(--mdg-accent) !important;
+    color: var(--mdg-accent) !important;
+}
+
+.stApp input:focus,
+.stApp textarea:focus,
+.stApp [data-baseweb="select"] > div:focus-within {
+    border-color: var(--mdg-accent) !important;
+    box-shadow: 0 0 0 3px var(--mdg-accent-dim) !important;
+}
+
+div[data-testid="stDialog"] div[data-testid="stTabs"]
+    div[data-testid="stTab"][aria-selected="true"] p {
+    color: var(--mdg-accent) !important;
+}
+
+div[data-testid="stDialog"] div[data-testid="stTabs"]
+    .react-aria-SelectionIndicator {
+    background: var(--mdg-accent) !important;
+}
