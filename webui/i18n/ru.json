@@ -273,6 +273,24 @@
     "Custom Position (% from top)": "Пользовательское положение (% от верхнего края)",
     "Please enter a value between 0 and 100": "Введите значение от 0 до 100",
     "Please enter a valid number": "Введите корректное число",
-    "Please Select a Valid Video Source": "Выберите поддерживаемый источник материалов"
+    "Please Select a Valid Video Source": "Выберите поддерживаемый источник материалов",
+    "Phase Script": "Сценарий",
+    "Phase Video": "Видео",
+    "Phase Audio": "Озвучка",
+    "Phase Subtitle": "Субтитры",
+    "Phase Continue": "Продолжить",
+    "Phase Finish": "Готово",
+    "Publishing Tab": "Публикация",
+    "Upload-Post Description": "Автоматически публикуйте ролики в TikTok, Instagram и YouTube через Upload-Post. Подключите аккаунты на их сайте и вставьте ключ ниже. Необязательно.",
+    "Enable Auto Publishing": "Включить автопубликацию",
+    "Upload-Post API Key": "API-ключ Upload-Post",
+    "Upload-Post Get Key Hint": "Создайте аккаунт на upload-post.com, подключите соцсети и сгенерируйте API-ключ.",
+    "Upload-Post Username": "Имя пользователя Upload-Post",
+    "Publishing Platforms": "Платформы",
+    "YouTube Privacy": "Приватность YouTube",
+    "Privacy Public": "Публично",
+    "Privacy Unlisted": "По ссылке",
+    "Privacy Private": "Приватно",
+    "Auto Publish After Generation": "Публиковать автоматически после готовности видео"
   }
 }

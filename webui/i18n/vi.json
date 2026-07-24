@@ -273,6 +273,24 @@
     "Please Enter the Coverr API Key": "Vui lòng nhập **API Key Coverr**",
     "Video Encoder": "Bộ Mã Hóa Video",
     "Default Video Encoder": "Mặc định (Khuyên dùng)",
-    "Video Encoder Help": "Tùy chọn nâng cao. Mặc định tuân theo chính sách mã hóa ổn định của ứng dụng, hiện là libx264. Nếu bộ mã hóa phần cứng không khả dụng, ứng dụng tự động chuyển về libx264."
+    "Video Encoder Help": "Tùy chọn nâng cao. Mặc định tuân theo chính sách mã hóa ổn định của ứng dụng, hiện là libx264. Nếu bộ mã hóa phần cứng không khả dụng, ứng dụng tự động chuyển về libx264.",
+    "Phase Script": "Kịch bản",
+    "Phase Video": "Video",
+    "Phase Audio": "Lồng tiếng",
+    "Phase Subtitle": "Phụ đề",
+    "Phase Continue": "Tiếp tục",
+    "Phase Finish": "Xong",
+    "Publishing Tab": "Đăng tải",
+    "Upload-Post Description": "Tự động đăng shorts lên TikTok, Instagram và YouTube qua Upload-Post. Kết nối tài khoản trên trang của họ và dán khóa bên dưới. Tùy chọn.",
+    "Enable Auto Publishing": "Bật đăng tự động",
+    "Upload-Post API Key": "Khóa API Upload-Post",
+    "Upload-Post Get Key Hint": "Tạo tài khoản tại upload-post.com, kết nối mạng xã hội và tạo khóa API.",
+    "Upload-Post Username": "Tên người dùng Upload-Post",
+    "Publishing Platforms": "Nền tảng",
+    "YouTube Privacy": "Quyền riêng tư YouTube",
+    "Privacy Public": "Công khai",
+    "Privacy Unlisted": "Không công khai",
+    "Privacy Private": "Riêng tư",
+    "Auto Publish After Generation": "Tự động đăng sau khi video sẵn sàng"
   }
 }

@@ -273,6 +273,24 @@
     "Video Source Settings": "**Videoquellen-Einstellungen**",
     "Coverr": "Coverr",
     "Coverr API Key": "Coverr API-Schlüssel ([API-Schlüssel holen](https://coverr.co/developers?ctx=header_navigation))",
-    "Please Enter the Coverr API Key": "Bitte geben Sie den **Coverr API-Schlüssel** ein"
+    "Please Enter the Coverr API Key": "Bitte geben Sie den **Coverr API-Schlüssel** ein",
+    "Phase Script": "Skript",
+    "Phase Video": "Video",
+    "Phase Audio": "Voiceover",
+    "Phase Subtitle": "Untertitel",
+    "Phase Continue": "Weiter",
+    "Phase Finish": "Fertig",
+    "Publishing Tab": "Veröffentlichung",
+    "Upload-Post Description": "Veröffentliche deine Shorts automatisch auf TikTok, Instagram und YouTube über Upload-Post. Verbinde deine Konten auf deren Website und füge den Schlüssel unten ein. Optional.",
+    "Enable Auto Publishing": "Automatische Veröffentlichung aktivieren",
+    "Upload-Post API Key": "Upload-Post API-Schlüssel",
+    "Upload-Post Get Key Hint": "Erstelle ein Konto auf upload-post.com, verbinde deine sozialen Netzwerke und erzeuge den API-Schlüssel.",
+    "Upload-Post Username": "Upload-Post Benutzername",
+    "Publishing Platforms": "Plattformen",
+    "YouTube Privacy": "YouTube-Sichtbarkeit",
+    "Privacy Public": "Öffentlich",
+    "Privacy Unlisted": "Nicht gelistet",
+    "Privacy Private": "Privat",
+    "Auto Publish After Generation": "Nach Fertigstellung automatisch veröffentlichen"
   }
 }

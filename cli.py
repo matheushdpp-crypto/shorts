@@ -366,7 +366,7 @@ Output and exit status:
         default=None,
         help=(
             "subtitle font filename inside resource/fonts "
-            "(default: STHeitiMedium.ttc)"
+            "(default: BeVietnamPro-Bold.ttf)"
         ),
     )
     subtitle_group.add_argument(

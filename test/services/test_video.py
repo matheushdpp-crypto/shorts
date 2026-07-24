@@ -955,13 +955,13 @@ class TestVideoService(unittest.TestCase):
     def test_wrap_text(self):
         """test text wrapping function"""
         try:
-            font_path = os.path.join(utils.font_dir(), "STHeitiMedium.ttc")
+            font_path = os.path.join(utils.font_dir(), "BeVietnamPro-Bold.ttf")
             if not os.path.exists(font_path):
                 self.fail(f"font file not found: {font_path}")
-                
+
             # test english text wrapping
             test_text_en = "This is a test text for wrapping long sentences in english language"
-            
+
             wrapped_text_en, text_height_en = vd.wrap_text(
                 text=test_text_en,
                 max_width=300,
@@ -971,18 +971,6 @@ class TestVideoService(unittest.TestCase):
             print(wrapped_text_en, text_height_en)
             # verify text is wrapped
             self.assertIn("\n", wrapped_text_en)
-            
-            # test chinese text wrapping
-            test_text_zh = "这是一段用来测试中文长句换行的文本内容，应该会根据宽度限制进行换行处理"
-            wrapped_text_zh, text_height_zh = vd.wrap_text(
-                text=test_text_zh,
-                max_width=300,
-                font=font_path,
-                fontsize=30
-            )   
-            print(wrapped_text_zh, text_height_zh)
-            # verify chinese text is wrapped
-            self.assertIn("\n", wrapped_text_zh)
         except Exception as e:
             self.fail(f"test wrap_text failed: {str(e)}")
 

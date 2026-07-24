@@ -273,6 +273,24 @@
     "Please Enter the Coverr API Key": "Silakan Masukkan **Kunci API Coverr**",
     "Video Encoder": "Encoder Video",
     "Default Video Encoder": "Default (Direkomendasikan)",
-    "Video Encoder Help": "Opsi lanjutan. Default mengikuti kebijakan encoder stabil aplikasi, saat ini libx264. Jika encoder perangkat keras tidak tersedia, aplikasi otomatis kembali ke libx264."
+    "Video Encoder Help": "Opsi lanjutan. Default mengikuti kebijakan encoder stabil aplikasi, saat ini libx264. Jika encoder perangkat keras tidak tersedia, aplikasi otomatis kembali ke libx264.",
+    "Phase Script": "Naskah",
+    "Phase Video": "Video",
+    "Phase Audio": "Sulih suara",
+    "Phase Subtitle": "Subtitle",
+    "Phase Continue": "Lanjutkan",
+    "Phase Finish": "Selesai",
+    "Publishing Tab": "Publikasi",
+    "Upload-Post Description": "Publikasikan shorts Anda otomatis ke TikTok, Instagram, dan YouTube via Upload-Post. Hubungkan akun Anda di situs mereka dan tempel kunci di bawah. Opsional.",
+    "Enable Auto Publishing": "Aktifkan publikasi otomatis",
+    "Upload-Post API Key": "Kunci API Upload-Post",
+    "Upload-Post Get Key Hint": "Buat akun di upload-post.com, hubungkan media sosial Anda, dan buat kunci API.",
+    "Upload-Post Username": "Nama pengguna Upload-Post",
+    "Publishing Platforms": "Platform",
+    "YouTube Privacy": "Privasi YouTube",
+    "Privacy Public": "Publik",
+    "Privacy Unlisted": "Tidak terdaftar",
+    "Privacy Private": "Privat",
+    "Auto Publish After Generation": "Terbitkan otomatis setelah video siap"
   }
 }

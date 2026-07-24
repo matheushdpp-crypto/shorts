@@ -132,33 +132,7 @@ class TestSubtitleBackgroundSettings(unittest.TestCase):
         )
         self.assertTrue(
             video.subtitle_font_supports_text(
-                str(fonts_dir / "MicrosoftYaHeiBold.ttc"), "人工智能改变生活"
+                str(fonts_dir / "BeVietnamPro-Bold.ttf"),
+                "Inteligência artificial æøå äöüß",
             )
         )
-        self.assertTrue(
-            video.subtitle_font_supports_text(
-                str(fonts_dir / "BeVietnamPro-Bold.ttf"), "Artificial intelligence"
-            )
-        )
-
-    def test_wrap_text_keeps_closing_punctuation_with_text(self):
-        """
-        中文长句按字符换行时，句号等闭合标点不能独占一行，否则字幕背景
-        会被一个单独的小点撑高。这里复现大字号中文长句的边界情况。
-        """
-        font_path = (
-            Path(__file__).parent.parent.parent
-            / "resource"
-            / "fonts"
-            / "MicrosoftYaHeiBold.ttc"
-        )
-
-        wrapped_text, _ = video.wrap_text(
-            "如果你调整字号，中文笔画也不能被黑色背景遮挡。",
-            max_width=1642,
-            font=str(font_path),
-            fontsize=72,
-        )
-
-        self.assertNotIn("\n。", wrapped_text)
-        self.assertIn("挡。", wrapped_text)

@@ -1572,7 +1572,7 @@ class TestTaskService(unittest.TestCase):
             subtitle_enabled=True,
             subtitle_position="bottom",
             custom_position=70.0,
-            font_name="MicrosoftYaHeiBold.ttc",
+            font_name="BeVietnamPro-Bold.ttf",
             text_fore_color="#FFFFFF",
             text_background_color=True,
             font_size=60,

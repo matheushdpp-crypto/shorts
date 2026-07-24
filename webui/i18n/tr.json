@@ -273,6 +273,24 @@
     "Please Enter the Coverr API Key": "Lütfen **Coverr API Anahtarını** girin",
     "Video Encoder": "Video Kodlayıcı",
     "Default Video Encoder": "Varsayılan (Önerilen)",
-    "Video Encoder Help": "Gelişmiş seçenek. Varsayılan, uygulamanın kararlı kodlayıcı politikasını izler; şu anda libx264 kullanılır. Donanım kodlayıcı kullanılamıyorsa uygulama otomatik olarak libx264'e döner."
+    "Video Encoder Help": "Gelişmiş seçenek. Varsayılan, uygulamanın kararlı kodlayıcı politikasını izler; şu anda libx264 kullanılır. Donanım kodlayıcı kullanılamıyorsa uygulama otomatik olarak libx264'e döner.",
+    "Phase Script": "Senaryo",
+    "Phase Video": "Video",
+    "Phase Audio": "Seslendirme",
+    "Phase Subtitle": "Altyazılar",
+    "Phase Continue": "Devam et",
+    "Phase Finish": "Bitti",
+    "Publishing Tab": "Yayınlama",
+    "Upload-Post Description": "Shorts videolarınızı Upload-Post ile TikTok, Instagram ve YouTube'da otomatik yayınlayın. Hesaplarınızı sitelerinde bağlayın ve anahtarı aşağıya yapıştırın. İsteğe bağlı.",
+    "Enable Auto Publishing": "Otomatik yayını etkinleştir",
+    "Upload-Post API Key": "Upload-Post API anahtarı",
+    "Upload-Post Get Key Hint": "upload-post.com'da hesap oluşturun, sosyal medyanızı bağlayın ve API anahtarını oluşturun.",
+    "Upload-Post Username": "Upload-Post kullanıcı adı",
+    "Publishing Platforms": "Platformlar",
+    "YouTube Privacy": "YouTube gizliliği",
+    "Privacy Public": "Herkese açık",
+    "Privacy Unlisted": "Liste dışı",
+    "Privacy Private": "Özel",
+    "Auto Publish After Generation": "Video hazır olunca otomatik yayınla"
   }
 }
